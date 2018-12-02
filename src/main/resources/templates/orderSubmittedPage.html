@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!--my header-->
+<head th:replace="common/header::common-header"/>
+<body>
+<!-- my navbar-->
+<div class="container-fluid" th:replace="common/navbar::navbar"/>
+
+<div class="container">
+    <!-- log image-->
+    <div class="row" style="vertical-align: center;">
+        <div class="col-md-4 offset-md-8" style="z-index: 1">
+            <img src="/imgs/livres_pour_soi.png">
+        </div>
+    </div>
+    <!--separation line with the title-->
+    <div class="row" style="margin-top: -150px; z-index: -1">
+        <div class="col-md-12 separation" style="margin-top: 50px">
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-2 col-sm-4 offset-md-3 offset-sm-4 separation text-center"
+             style="margin-top: -40px; color: #0b2e13; background-color: #80bdff;padding-top: 10px">
+            <span th:text="${user}? ${#strings.toUpperCase(user.username)}: 'Book\'s Detail'" style="color: darkred; font-weight: bolder"></span>
+        </div>
+    </div>
+    <!--back image title-->
+    <div class="row" style="z-index: -2; margin-top: -125px">
+        <img src="/imgs/backs.jpg" style="width: 100%; height: 200px;">
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success row">
+                <div class="col-md-9 offset-md-3 text-center" style="font-size: 22px">
+                    <i class="fa fa-check" aria-hidden="true" style="color: limegreen;"></i>
+                    Thank you, your order has been placed. The estimated delivery date is<br>
+                    <span th:text="${estimatedDeliveryDate}" style="color: #533f03"></span>
+                </div>
+            </div>
+            <div class="row" style="color: #0b2e13">
+                <div class="col-md-3"></div>
+                <div class="col-md-9 text-center" style="font-size: 26px">
+                    List of items
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title text-center">
+                                Menu
+                            </div>
+                        </div>
+                        <div class="card-body" style="color: #b3d7ff">
+                            <p><a th:href="@{/home}">Home</a></p>
+                            <p>
+                                <a th:href="@{/bookshelf}">Do you forget a book?</a>
+                            </p>
+                            <p>
+                                <a th:href="@{/logout}">Logout</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-8"><h4>Products</h4></div>
+                        <div class="col-md-2"><h4>Price</h4></div>
+                        <div class="col-md-2"><h4>Qty</h4></div>
+                    </div>
+
+                    <!--separation line with the title-->
+                    <div class="row">
+                        <div class="col-md-12 separation">
+                            <hr/>
+                        </div>
+                    </div>
+
+                    <div  th:each="cartItem:${cartItemList}">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a th:href="@{/bookDetail(id=${cartItem.book.id})}">
+                                    <img class="img-fluid shelf-book"
+                                         th:src="#{adminPath}+@{/images/books/}+${cartItem.book.id}+'.png'" style="height: 80px">
+                                </a>
+                            </div>
+                            <div class="col-md-5 offset-md-1">
+                                <p>
+                                    <span th:text="${cartItem.book.title}"></span>
+                                </p>
+                            </div>
+                            <div class="col-md-2">
+                                <h5 style="color: #db3208; font-size: large">
+                                    $<span th:text="${cartItem.book.ourPrice}"></span>
+                                </h5>
+                            </div>
+                            <div class="col-md-2">
+                                <h5 style="color: #db3208; font-size: large">
+                                    <span th:text="${cartItem.qty}"></span>
+                                </h5>
+                            </div>
+                        </div>
+                        <!--separation line with the title-->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <hr style="height: 1px; background-color: black; color: black"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--my scripts-->
+<div th:replace="common/header::body-common-scripts"/>
+</body>
+</html>
